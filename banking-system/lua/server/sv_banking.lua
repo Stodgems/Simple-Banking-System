@@ -85,3 +85,9 @@ net.Receive("RequestBalance", function(len, ply)
         end
     end)
 end)
+
+net.Receive("OpenBankTerminal", function(len, ply)
+    initializePlayerAccount(ply)
+    net.Start("OpenBankTerminal")
+    net.Send(ply)
+end)

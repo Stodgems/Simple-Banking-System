@@ -11,7 +11,7 @@ net.Receive("OpenBankTerminal", function()
 
     local balanceLabel = vgui.Create("DLabel", frame)
     balanceLabel:SetPos(10, 30)
-    balanceLabel:SetText("Balance: Loading...")
+    balanceLabel:SetText("Balance: 0")
     balanceLabel:SizeToContents()
 
     local depositButton = vgui.Create("DButton", frame)
