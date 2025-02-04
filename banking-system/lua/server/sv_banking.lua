@@ -13,9 +13,8 @@ local playerAccounts = {}
 local function initializePlayerAccount(ply)
     if not playerAccounts[ply:SteamID()] then
         playerAccounts[ply:SteamID()] = { balance = 0 }
-        print("Creating account for player: " .. ply:SteamID())
         database.createAccount(ply:SteamID(), function()
-            print("Account created for player: " .. ply:SteamID())
+            -- Account created callback
         end)
     end
 end
@@ -32,13 +31,11 @@ end
 
 net.Receive("Banking_Transaction", function(len, ply)
     local action = net.ReadString()
-    local amount = tonumber(net.ReadInt(32)) 
-    print("Received Banking_Transaction: action=" .. action .. ", amount=" .. amount)
+    local amount = tonumber(net.ReadInt(32))
 
     initializePlayerAccount(ply)
 
     if action == "deposit" then
-        print(ply:Nick() .. " has " .. ply:GetMoney() .. " money.")
         if ply:RemoveMoney(amount) then
             playerAccounts[ply:SteamID()].balance = playerAccounts[ply:SteamID()].balance + amount
             database.updateBalance(ply:SteamID(), playerAccounts[ply:SteamID()].balance, function()
